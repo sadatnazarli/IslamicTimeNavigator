@@ -20,6 +20,10 @@
             background-color: rgba(0, 0, 0, 0.7);
             color: #fff;
             padding: 10px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
 
         h1 {
@@ -27,17 +31,33 @@
             font-size: 1.5em;
         }
 
-        #donateButton {
-            position: fixed;
-            top: 10px;
-            right: 10px;
+        #donateButton,
+        #ramadanButton {
             padding: 10px;
             font-size: 1em;
-            background-color: #3498db;
-            color: #fff;
             border: none;
             border-radius: 4px;
             cursor: pointer;
+        }
+        
+        #donateButton {
+            /* position: fixed;
+            top: 10px;
+            right: 10px; */
+            background-color: #3498db;
+            color: #fff;
+            margin-right: 10px; /* Add some space to the right of the "Donate" button */
+        }
+        
+        #ramadanButton {
+            /* position: fixed;
+            top: 10px;
+            right: 80px;  */
+            /* Adjust the right position to move it to the left of the "Donate" button */
+            
+            background-color: #27ae60; /* Green color, you can change it */
+            color: #fff;
+            margin-right: 10px; /* Add some space to the right of the "Ramadan Times" button */
         }
 
         main {
@@ -60,8 +80,8 @@
         }
 
         .prayer-box {
-            width: 100px;
-            height: 100px;
+            width: 180px; 
+            height: 180px; 
             border: 1px solid #ddd;
             text-align: center;
             padding: 8px;
@@ -85,12 +105,12 @@
         #currentTime {
             font-size: 1.5em;
             margin-top: 10px;
-            position: fixed;
+            /* position: fixed;
             top: 10px;
-            left: 10px;
+            left: 10px; */
         }
 
-        @media only screen and (max-width: 600px) {
+        /* @media only screen and (max-width: 600px) {
             #donateButton {
                 position: static;
                 margin-top: 10px;
@@ -101,20 +121,36 @@
                 margin-top: 10px;
                 width: auto;
             }
+        } */
+
+        @media only screen and (max-width: 680px){
+            header{
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            #donateButton,
+            #ramadanButton {
+                margin-right: 0px;
+            }
         }
-        
+
     </style>
 </head>
 <body>
     <header>
-        <h1>Namaz Vaxtları</h1>
-        <button id="donateButton" onclick="openDonationPage()">İanə et</button>
+        <div id="currentTime"></div>
+        <h1>Namaz Vaxtları</h1> 
+        <div class="buttons">
+            <button id="donateButton" onclick="openDonationPage()">İanə et</button>
+            <button id="ramadanButton" onclick="openRamadanPage()">Ramazan Cədvəli</button>
+        </div>
     </header>
 
     <main>
         <div class="prayer-container" id="prayerTimes"></div>
-        <div id="currentTime"></div>
     </main>
+
 
     <footer>
         <p>&copy; Müəllif hüquqları qorunur</p>
@@ -195,6 +231,14 @@
         function openDonationPage() {
             window.location.href = 'https://www.paypal.com/donate/?hosted_button_id=MR6GYD73BAXEQ';
         }
+
+        function openRamadanPage() {
+    window.open('ramadan.html');  
+}
+
+
+
+        
     </script>
 </body>
 </html>
