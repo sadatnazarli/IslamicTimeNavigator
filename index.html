@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Azerbaijani Namaz Vaxtları</title>
+   <link rel="stylesheet" href="./style/style.css">
+</head>
+<body>
+    <header>
+        <h1>Azerbaijani Namaz Vaxtları</h1>
+    </header>
+
+    <main>
+        <div class="prayer-container" id="prayerTimes"></div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Your Prayer Times Website</p>
+    </footer>
+
+    <script>
+        // Assuming you have already created an api.json file with city and country information
+
+        // Read city and country from api.json file
+        fetch('api.json')
+            .then(response => response.json())
+            .then(config => {
+                const apiUrl = `https://api.aladhan.com/v1/calendarByCity/2017/4?city=${config.city}&country=${config.country}&method=2`;
+
+                // Fetch prayer times from the API
+                fetch(apiUrl)
+                    .then(response => response.json())
+                    .then(data => {
+                        const prayerTimes = data.data[0].timings;
+
+                        // Display prayer times in squares on the webpage
+                        const prayerTimesContainer = document.getElementById('prayerTimes');
+                        for (const [key, value] of Object.entries(prayerTimes)) {
+                            const translatedName = translateToAzerbaijani(key); // Translate English names to Azerbaijani
+                            const prayerBox = document.createElement('div');
+                            prayerBox.className = 'prayer-box';
+                            prayerBox.innerHTML = `<p>${translatedName}</p><p class="time">${value}</p>`;
+                            prayerTimesContainer.appendChild(prayerBox);
+                        }
+                    })
+                    .catch(error => console.error('Error fetching prayer times:', error));
+            })
+            .catch(error => console.error('Error reading api.json:', error));
+
+        // Function to translate English names to Azerbaijani
+        function translateToAzerbaijani(englishName) {
+            switch (englishName) {
+                case 'Fajr':
+                    return 'İmsak';
+                case 'Dhuhr':
+                    return 'Zuhr';
+                case 'Asr':
+                    return 'Əsr';
+                case 'Maghrib':
+                    return 'Məğrib';
+                case 'Isha':
+                    return 'İşa';
+                default:
+                    return englishName;
+            }
+        }
+    </script>
+</body>
+</html>
