@@ -3,16 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Namaz Vaxtları</title>
+    <title>Namaz Vaxtları</title>
+    <link rel="icon" type="image/jpeg" href="./style/Islamic logo, Mosque.jpeg"/>
     <style>
-        /* Your existing CSS styles go here */
-
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
             background: url('./style/backphoto.jpeg') no-repeat center center fixed;
-            background-size: 100% 100%;
+            background-size: cover;
             text-align: center;
             color: #fff;
         }
@@ -25,7 +24,9 @@
 
         h1 {
             margin: 0;
+            font-size: 1.5em;
         }
+
         #donateButton {
             position: fixed;
             top: 10px;
@@ -38,6 +39,7 @@
             border-radius: 4px;
             cursor: pointer;
         }
+
         main {
             padding: 20px;
         }
@@ -68,15 +70,16 @@
             display: flex;
             flex-direction: column;
             justify-content: space-around;
+            background-color: rgba(80, 13, 235, 0.7);
+            transition: transform 0.3s ease-in-out;
         }
+        .prayer-box:hover {
+            transform: scale(1.05);
+        }
+
 
         .time {
             font-weight: bold;
-        }
-
-        .date {
-            font-size: 0.8em;
-            color: #666;
         }
 
         #currentTime {
@@ -86,6 +89,7 @@
             top: 10px;
             left: 10px;
         }
+
         @media only screen and (max-width: 600px) {
             #donateButton {
                 position: static;
@@ -103,7 +107,7 @@
 </head>
 <body>
     <header>
-        <h1> Namaz Vaxtları</h1>
+        <h1>Namaz Vaxtları</h1>
         <button id="donateButton" onclick="openDonationPage()">İanə et</button>
     </header>
 
@@ -113,7 +117,7 @@
     </main>
 
     <footer>
-        <p>&copy; 2024 Your Prayer Times Website</p>
+        <p>&copy; Müəllif hüquqları qorunur</p>
     </footer>
 
     <script>
@@ -131,9 +135,15 @@
                     .then(data => {
                         const prayerTimes = data.data[0].timings;
 
+                        // Exclude unwanted prayer times
+                        const excludedPrayers = ['Sunset', 'Imsak', 'Midnight', 'Firstthird', 'Lastthird'];
+                        const filteredPrayerTimes = Object.fromEntries(
+                            Object.entries(prayerTimes).filter(([key, value]) => !excludedPrayers.includes(key))
+                        );
+
                         // Display prayer times in squares on the webpage
                         const prayerTimesContainer = document.getElementById('prayerTimes');
-                        for (const [key, value] of Object.entries(prayerTimes)) {
+                        for (const [key, value] of Object.entries(filteredPrayerTimes)) {
                             const translatedName = translateToAzerbaijani(key); // Translate English names to Azerbaijani
                             const prayerBox = document.createElement('div');
                             prayerBox.className = 'prayer-box';
@@ -148,10 +158,12 @@
         // Function to translate English names to Azerbaijani
         function translateToAzerbaijani(englishName) {
             switch (englishName) {
+                case 'Sunrise':
+                    return 'Sübh';
                 case 'Fajr':
                     return 'İmsak';
                 case 'Dhuhr':
-                    return 'Zuhr';
+                    return 'Zöhr';
                 case 'Asr':
                     return 'Əsr';
                 case 'Maghrib':
