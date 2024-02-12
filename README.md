@@ -16,6 +16,9 @@ To use the IslamicTimeNavigator web application, follow these steps:
 2. Open the index.html file in your preferred web browser.
 3. Explore daily prayer times and Ramadan schedule.
 
+## Demo of Website 
+https://sadatnazarli.github.io/IslamicTimeNavigator/
+
 ## Usage
 
 The web application provides an intuitive interface for viewing prayer times and the Ramadan schedule. Follow these steps:
